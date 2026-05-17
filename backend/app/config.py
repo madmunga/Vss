@@ -18,6 +18,14 @@ class Settings(BaseSettings):
 
     FRONTEND_URL: str = "http://localhost:5173"
 
+    # Email / SMTP (optional — falls back to console log if not set)
+    SMTP_HOST: str = ""
+    SMTP_PORT: int = 587
+    SMTP_USER: str = ""
+    SMTP_PASSWORD: str = ""
+    SMTP_FROM: str = "noreply@vss.app"
+    SMTP_TLS: bool = True
+
     @property
     def stripe_price_map(self) -> dict:
         return {"S": self.STRIPE_PRICE_S, "A": self.STRIPE_PRICE_A, "B": self.STRIPE_PRICE_B}

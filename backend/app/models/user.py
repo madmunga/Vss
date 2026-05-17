@@ -26,6 +26,9 @@ class User(Base):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     is_verified: Mapped[bool] = mapped_column(Boolean, default=False)
     refresh_token_hash: Mapped[str | None] = mapped_column(String)
+    verification_token: Mapped[str | None] = mapped_column(String)
+    reset_token: Mapped[str | None] = mapped_column(String)
+    reset_token_expires: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )

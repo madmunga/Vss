@@ -25,6 +25,9 @@ export default function Navbar() {
             {user.role === "PROFESSIONAL" && (
               <Link to="/portal" className="hover:text-brand-100 transition">My Portal</Link>
             )}
+            {user.role === "ADMIN" && (
+              <Link to="/admin" className="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded-full text-xs font-bold transition">Admin</Link>
+            )}
             <Link to="/profile" className="hover:text-brand-100 transition">
               <span className="bg-brand-700 rounded-full px-3 py-1">{user.display_name}</span>
             </Link>
