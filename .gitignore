@@ -21,3 +21,4 @@ backend/alembic/versions/__pycache__/
 # Misc
 .DS_Store
 *.log
+frontend/tsconfig.tsbuildinfo
