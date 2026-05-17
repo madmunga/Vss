@@ -16,7 +16,7 @@ from app.config import settings
 
 
 async def create_schema():
-    engine = create_async_engine(settings.DATABASE_URL, echo=True)
+    engine = create_async_engine(settings.async_database_url, echo=True)
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     await engine.dispose()

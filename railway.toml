@@ -1,0 +1,21 @@
+[build]
+builder = "DOCKERFILE"
+
+[[services]]
+name = "backend"
+rootDir = "backend"
+
+[services.build]
+dockerfilePath = "Dockerfile"
+
+[services.deploy]
+startCommand = "./start.sh"
+healthcheckPath = "/health"
+healthcheckTimeout = 60
+
+[[services]]
+name = "frontend"
+rootDir = "frontend"
+
+[services.build]
+dockerfilePath = "Dockerfile"

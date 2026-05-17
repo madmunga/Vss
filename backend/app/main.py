@@ -18,9 +18,12 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+_cors_origins = [settings.FRONTEND_URL, "http://localhost:5173"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_URL, "http://localhost:5173"],
+    allow_origins=_cors_origins,
+    allow_origin_regex=r"https://.*\.railway\.app",  # allow any Railway subdomain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

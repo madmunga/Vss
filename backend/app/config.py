@@ -27,6 +27,16 @@ class Settings(BaseSettings):
     SMTP_TLS: bool = True
 
     @property
+    def async_database_url(self) -> str:
+        """Railway (and most providers) give postgresql:// — asyncpg needs postgresql+asyncpg://"""
+        url = self.DATABASE_URL
+        if url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql+asyncpg://", 1)
+        elif url.startswith("postgresql://"):
+            url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return url
+
+    @property
     def stripe_price_map(self) -> dict:
         return {"S": self.STRIPE_PRICE_S, "A": self.STRIPE_PRICE_A, "B": self.STRIPE_PRICE_B}
 
@@ -36,3 +46,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+

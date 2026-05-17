@@ -1,12 +1,27 @@
-FROM node:22-alpine
+# Stage 1: build
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
-RUN npm install
+COPY package*.json ./
+RUN npm ci
 
 COPY . .
 
-EXPOSE 5173
+# VITE_API_URL is injected at build time via Railway environment variables
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
 
-CMD ["npm", "run", "dev"]
+RUN npm run build
+
+# Stage 2: serve with nginx
+FROM nginx:alpine
+
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# SPA fallback: all routes serve index.html so React Router works
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
